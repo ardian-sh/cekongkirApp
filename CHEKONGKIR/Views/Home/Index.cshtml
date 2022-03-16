@@ -1,0 +1,193 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h3 class="display-4">Cek Ongkir App</h3>
+    <p> By Api Raja Ongkir</p>
+</div>
+
+@if (ViewBag.Error != null)
+{
+    <p>@ViewBag.Error</p>
+}
+else
+{
+    <h3 id="errorfunction"></h3>
+    <div class="container mt-4">
+        <div id="viewform">
+            @await Html.PartialAsync("_FormView")
+        </div>
+        
+        <div id="viewgrid" class="mt-3">
+            <!--for table-->
+        </div>
+    </div>
+    
+}
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#loadinggif").hide();
+        $("#errorfunction").hide();
+    });
+
+    $('#cityfrom').select2({
+        minimumInputLength: 1,
+        language: {
+            inputTooShort: function () {
+                return 'Masukkan nama kota/kabupaten';
+            },
+            searching: function () {
+                return "Sedang mencari...";
+            },
+            noResults: function (params) {
+                return "Data tidak ditemukan";
+            }
+        },
+        theme: 'bootstrap4',
+        allowClear: true,
+        placeholder: 'kota/kabupaten asal',
+        ajax: {
+            type: "GET",
+            dataType: 'json',
+            url: '@Url.Content("Home/SearchCity")',
+            delay: 800,
+            data: function (params) {
+                return {
+                    search: params.term
+                }
+            },
+            processResults: function (data) {
+                if (data.isuccess) {
+                    return {
+                        results: data.items
+                    };
+                }
+                else {
+                    $("#viewform").remove();
+                    $("#errorfunction").html(data.msgerror);
+                    $("#errorfunction").show();                   
+                }
+            },
+        }
+    });
+
+    $('#cityto').select2({
+        minimumInputLength: 1,
+        language: {
+            inputTooShort: function () {
+                return 'Masukkan nama kota/kabupaten';
+            },
+            searching: function () {
+                return "Sedang mencari...";
+            },
+            noResults: function (params) {
+                return "Data tidak ditemukan";
+            }
+        },
+        allowClear: true,
+        theme: 'bootstrap4',
+        placeholder: 'kota/kabupaten tujuan',
+        ajax: {
+            type: "GET",
+            dataType: 'json',
+            url: '@Url.Content("Home/SearchCity")',
+            delay: 500,
+            data: function (params) {
+                return {
+                    search: params.term
+                }
+            },
+            processResults: function (data) {
+                if (data.isuccess) {
+                    return {
+                        results: data.items
+                    };
+                }
+                else {
+                    $("#viewform").remove();
+                    $("#errorfunction").html(data.msgerror);
+                    $("#errorfunction").show();
+                }
+            },
+        }
+    });
+
+
+    function SendFromAjax() {
+        $("#cityfrom").removeClass("is-invalid");
+        $("#cityto").removeClass("is-invalid");
+        $("#weight").removeClass("is-invalid");
+
+        var originis = $("#cityfrom").val();
+        var destinations = $("#cityto").val();
+        var weights = $("#weight").val();
+
+        if (originis == null || originis == "") {
+            $("#cityfrom").addClass("is-invalid");
+            $("#smallmsg").text("silahkan isi kota/kabupaten asal");
+            return false;
+        }
+        else if (destinations == null || destinations == "") {
+            $("#cityto").addClass("is-invalid");
+            $("#smallmsg").text("silahkan isi kota/kabupaten tujuan");
+            return false;
+        }
+        else if (weights == null || weights == "") {
+            $("#weight").addClass("is-invalid");
+            $("#smallmsg").text("silahkan isi berat (kg)");
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Content("Home/SearchCost")',
+            data: {
+                origin: originis,
+                destination: destinations,
+                weight: weights
+            },
+            dataType: "html",
+            beforeSend: function () {
+                $("#loadinggif").show();
+
+            },
+            success: function (data) {
+
+                $("#cityfrom").removeClass("is-invalid");
+                $("#cityto").removeClass("is-invalid");
+                $("#weight").removeClass("is-invalid");
+
+                $("#loadinggif").hide();
+                $("#viewgrid").html(data);              
+            },
+            error: function (jqXHR, exception) {
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.';
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+
+                $("#viewform").remove();
+                $("#errorfunction").show();
+                $("#errorfunction").html(msg);
+            }
+        });
+    }
+
+
+</script>

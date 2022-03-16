@@ -1,0 +1,57 @@
+﻿@using rajaongkir.cost.Models;
+@using System.Globalization;
+
+@{
+    List<ResultCostModel> results = (List<ResultCostModel>)ViewData["listdata"] != null ?
+        (List<ResultCostModel>)ViewData["listdata"] : new List<ResultCostModel>();
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.validerr))
+{
+<script type="text/javascript">
+        $("#smallmsg").text("@ViewBag.validErr");
+        $("#viewgrid").remove();
+</script>
+}
+else if (!string.IsNullOrEmpty(ViewBag.sysError))
+{
+    <script type="text/javascript">
+        $("#errorfunction").html("@ViewBag.sysError");
+        $("#errorfunction").show();
+        $("#viewgrid").remove();
+        $("#viewform").remove();
+    </script>
+}
+
+<p class="lead">Hasil pengecekan dari <b>@ViewBag.cityfrom</b> ke <b>@ViewBag.cityto</b> dengan berat <b>@ViewBag.weight kg</b></p>
+<table class="table table-sm table-bordered">
+    <thead>
+        <tr>
+            <th>Kurir</th>
+            <th>Jenis Layanan</th>
+            <th>Biaya</th>
+            <th>Estimasi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ResultCostModel result in results)
+        {
+            <tr>
+                <td rowspan="@result.Costs.Count" style="vertical-align : middle;text-align:left;">@result.Name</td>
+                <td>@result.Costs[0].Description (@result.Costs[0].Service)</td>
+                <td>@String.Format(CultureInfo.CreateSpecificCulture("id-id"), "Rp. {0:N}", @result.Costs[0].Cost[0].Value)</td>
+                <td>@result.Costs[0].Cost[0].Etd.ToLower().Replace("hari","") hari</td>
+            </tr>
+
+            @for (int i = 1; i < result.Costs.Count; i++)
+            {
+                <tr>
+
+                    <td>@result.Costs[i].Description (@result.Costs[i].Service)</td>
+                    <td>@String.Format(CultureInfo.CreateSpecificCulture("id-id"), "Rp. {0:N}", @result.Costs[i].Cost[0].Value)</td>
+                    <td>@result.Costs[i].Cost[0].Etd.ToLower().Replace("hari", "") hari</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

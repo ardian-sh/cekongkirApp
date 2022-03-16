@@ -1,0 +1,28 @@
+﻿<form id="#formview">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="city from"><b>Kota/Kabupaten asal</b></label>
+                <select class="form-control border-0" id="cityfrom"></select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="city to"><b>Kota/Kabupaten tujuan</b></label>
+                <select class="form-control" id="cityto"></select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="basic-url"><b>Berat (kg)</b></label>
+                <input type="number" class="form-control" autocomplete="off" placeholder="masukan berat" id="weight" />
+            </div>
+        </div>
+        <div class="col-md-3" style="padding-top:29px;">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary btn-block" value="Cek tarif" onclick="SendFromAjax()" />
+                <small class="text-danger" id="smallmsg"></small>
+            </div>
+        </div>
+    </div>
+</form>
