@@ -3,7 +3,7 @@
 
 # Tentang
 
-cekongkir App adalah aplikasi web simple dengan memaanfaatkan API dari Raja Ongkir untuk mencari ongkos kirim dari kota/kabupaten asal ke kota/kabupaten tujuan dengan berat tertentu. API yang di pakai adalah versi free/starter https://rajaongkir.com/dokumentasi/starter dengan fitur pengecekan ongkos kirim (ongkir) untuk kurir JNE, POS Indonesia, dan TIKI. Cekongkir App dibuat dengan framework asp.net core 5(c#).
+cekongkir App adalah aplikasi web yang memanfaatkan API dari Raja Ongkir untuk mengetahui ongkos kirim dari kota/kabupaten asal ke kota/kabupaten tujuan dengan berat tertentu. API yang di pakai adalah versi free/starter https://rajaongkir.com/dokumentasi/starter dengan fitur pengecekan ongkos kirim (ongkir) untuk kurir JNE, POS Indonesia, dan TIKI. Cekongkir App dibuat dengan framework asp.net core 5(c#).
 
 # Persiapan
 
