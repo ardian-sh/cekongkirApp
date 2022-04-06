@@ -1,4 +1,3 @@
-![image](https://user-images.githubusercontent.com/76439911/158545935-becf1b9b-58b8-4c47-90e3-d51d7840fcc7.png)
 
 
 # Tentang
@@ -12,6 +11,10 @@ Daftar di website Raja Ongkir https://rajaongkir.com/akun/daftar untuk mendapatk
 # Minimum Requirement
 
 Visual studio 2019
+
+# Demo
+
+https://cekongkirapp.herokuapp.com/
 
 # Kontak
 
