@@ -22,7 +22,7 @@ namespace cekongkir.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private readonly string myKeys = "Copy di sini";
+        private readonly string myKeys = "fbdec8900f53cab26f7acec9ec89fbe3";
 
         private readonly IMemoryCache _memoryCache;
         public HomeController(ILogger<HomeController> logger, IMemoryCache memoryCache)
