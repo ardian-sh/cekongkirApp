@@ -12,6 +12,8 @@ Daftar di website Raja Ongkir https://rajaongkir.com/akun/daftar untuk mendapatk
 
 Visual studio 2019
 
+.NET CORE 5
+
 # Demo
 
 https://cekongkirapp.herokuapp.com/
